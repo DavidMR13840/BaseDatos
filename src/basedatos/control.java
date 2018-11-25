@@ -3,12 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package basedatos;
 
 /**
  *
  * @author David
  */
+import com.google.gson.Gson;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.json.JSONObject;
+
+
 public class control {
     
     public static void main(String[] args) {
@@ -47,13 +59,27 @@ public class control {
             System.out.println("Fallo");
         }
         System.out.println(t.registries.get(0).toString());
-//        if(bd.){
-//            System.out.println("Registro agregado");
-//        }else{
-//            System.out.println("Fallo");
-//        }
-//        
-        //System.out.println(t.getName());
+        
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(bd);
+        System.out.println("1 " + jsonString);
+        try {
+            FileWriter file = new FileWriter("Prueba.json");
+                file.write(jsonString);
+                file.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(control.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        BufferedReader br = null;
+        try{
+            br= new BufferedReader(new FileReader("Prueba.json"));
+            BaseDatos baseDatos = gson.fromJson(br, BaseDatos.class);
+            String newjson = gson.toJson(baseDatos);
+            System.out.println("2 " + newjson);
+            
+        }catch(FileNotFoundException e){
+            System.out.println("File not found");
+        }
     }
     
 }
