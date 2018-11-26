@@ -159,6 +159,7 @@ public class SeleccionBD extends javax.swing.JFrame {
         BaseDatos base = server.selectbase(sBase);
         MenuBases menuBases = new MenuBases(server, base);
         menuBases.setVisible(true);
+        this.dispose();
         
     }//GEN-LAST:event_BSelectActionPerformed
 

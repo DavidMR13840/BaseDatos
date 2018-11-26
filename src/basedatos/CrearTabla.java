@@ -189,7 +189,7 @@ public class CrearTabla extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(control.class.getName()).log(Level.SEVERE, null, ex);
         }
-           new CrearTabla(server, baseDatos).setVisible(true);
+           new MenuBases(server, baseDatos).setVisible(true);
            this.dispose();
         }
         

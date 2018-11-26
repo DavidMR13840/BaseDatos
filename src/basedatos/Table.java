@@ -14,8 +14,8 @@ import java.util.ArrayList;
 public class Table {
     
     private String name;
-    private ArrayList<Field> fields = new ArrayList<Field>();
-    public ArrayList<Registry> registries = new ArrayList<Registry>();
+    private ArrayList<Field> fields = new ArrayList<>();
+    private ArrayList<Registry> registries = new ArrayList<>();
     private String structure;
     private Field primField;    
     
@@ -56,6 +56,10 @@ public class Table {
         }else{
             return false;
         }        
+    }
+    
+    public ArrayList<Field> getFields(){
+        return  this.fields;
     }
     
     private void setPrimKey(Field f){
@@ -142,14 +146,14 @@ public class Table {
     
     private String getType(String pString){
         String type;
-        if(isStringClass(Integer.class, pString)){
+         if(isStringClass(Integer.class, pString)){
             type = "int";
-        }else if(isStringClass(Boolean.class, pString)){
-            type = "boolean";
         }else if(isStringClass(Double.class, pString)){
             type = "double";
         }else if(isStringClass(Float.class, pString)){
             type = "float";
+        }else if(isStringClass(Boolean.class, pString)){
+            type = "boolean";
         }else{
             type = "String";}
         return type;
@@ -177,4 +181,61 @@ public class Table {
 
     return true;
 }
+    
+    public ArrayList<Field> getFields(ArrayList<String> strings){
+        ArrayList<Field> fs = new ArrayList<>();
+        for(String s : strings){
+            fs.add(getField(s));
+        }
+        return fs;
+    }
+    
+    public ArrayList<String> showRegistries(ArrayList<String> fieldsnames, String opString, String cField, String condition){
+        ArrayList<String> res = new ArrayList<>();
+        ArrayList<Field> fs = getFields(fieldsnames);
+        int op = detOperators(opString);
+        Field f = getField(cField);
+        if(!f.getType().equals(getType(condition))){
+            return null;
+        }else{
+            for(Registry r: registries){
+                res.add(r.toString(f, condition, fs,op));
+            }
+            return res;
+        }
+        
+    }
+    
+    private Field getField(String pname){
+        Field f = null;
+        for(Field field: fields){
+            if(field.getName().equals(pname)){
+               f = field;
+               break;
+            }
+        }
+        return f;
+    }
+        private int detOperators(String opsString){
+        int op = 0;
+        switch(opsString){
+            case "==":
+                op = 1;
+                break;
+            case "!=":
+                op = 2;
+                break;
+            case ">":
+                op = 3;
+                break;
+            case "<":
+                op = 4;
+                break;
+            default:
+                break;
+        }
+        return op;
+    }
+        
+        
 }

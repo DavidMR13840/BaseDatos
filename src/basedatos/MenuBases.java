@@ -33,6 +33,10 @@ public class MenuBases extends javax.swing.JFrame {
         Beliminar = new javax.swing.JButton();
         BInReg = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        B_cancelar = new javax.swing.JButton();
+        B_Cnombre = new javax.swing.JButton();
+        b_ElReg = new javax.swing.JButton();
+        b_SelReg = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -44,6 +48,11 @@ public class MenuBases extends javax.swing.JFrame {
         });
 
         Beliminar.setText("Eliminar tabla");
+        Beliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BeliminarActionPerformed(evt);
+            }
+        });
 
         BInReg.setText("Insertar Registro");
         BInReg.addActionListener(new java.awt.event.ActionListener() {
@@ -55,22 +64,64 @@ public class MenuBases extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Menu de Base de Datos");
 
+        B_cancelar.setText("Cancelar");
+        B_cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                B_cancelarActionPerformed(evt);
+            }
+        });
+
+        B_Cnombre.setText("Cambiar Nombre");
+        B_Cnombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                B_CnombreActionPerformed(evt);
+            }
+        });
+
+        b_ElReg.setText("Eliminar Registros");
+        b_ElReg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_ElRegActionPerformed(evt);
+            }
+        });
+
+        b_SelReg.setText("Seleccionar Registros");
+        b_SelReg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_SelRegActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(104, 104, 104)
-                        .addComponent(jLabel1))
+                .addGap(104, 104, 104)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(29, 29, 29)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Bcrear)
-                            .addComponent(BInReg)
-                            .addComponent(Beliminar))))
-                .addContainerGap(86, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(BInReg)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                                .addComponent(b_SelReg))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(Beliminar)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(Bcrear)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(B_Cnombre)
+                                    .addComponent(b_ElReg)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(B_cancelar)))
+                .addGap(37, 37, 37))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -78,12 +129,20 @@ public class MenuBases extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addComponent(jLabel1)
                 .addGap(55, 55, 55)
-                .addComponent(Bcrear)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Bcrear)
+                    .addComponent(B_Cnombre))
                 .addGap(18, 18, 18)
-                .addComponent(Beliminar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
-                .addComponent(BInReg)
-                .addGap(87, 87, 87))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Beliminar)
+                    .addComponent(b_ElReg))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(b_SelReg)
+                    .addComponent(BInReg))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addComponent(B_cancelar)
+                .addGap(28, 28, 28))
         );
 
         pack();
@@ -93,13 +152,45 @@ public class MenuBases extends javax.swing.JFrame {
         // TODO add your handling code here:
         CrearTabla crearTabla = new CrearTabla(server, baseDatos);
         crearTabla.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_BcrearActionPerformed
 
     private void BInRegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BInRegActionPerformed
         // TODO add your handling code here:
         InsertarRegistro insertarRegistro = new InsertarRegistro(server,baseDatos);
         insertarRegistro.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_BInRegActionPerformed
+
+    private void B_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_cancelarActionPerformed
+        // TODO add your handling code here:
+        new SeleccionBD().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_B_cancelarActionPerformed
+
+    private void BeliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BeliminarActionPerformed
+        // TODO add your handling code here:
+        new EliminarTabla(server, baseDatos).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_BeliminarActionPerformed
+
+    private void B_CnombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_CnombreActionPerformed
+        // TODO add your handling code here:
+        new ChangeName(server, baseDatos).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_B_CnombreActionPerformed
+
+    private void b_ElRegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_ElRegActionPerformed
+        // TODO add your handling code here:
+        new EliminarRegistros(server, baseDatos).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_b_ElRegActionPerformed
+
+    private void b_SelRegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_SelRegActionPerformed
+        // TODO add your handling code here:
+        new SeleccionarDatos(server, baseDatos).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_b_SelRegActionPerformed
 
     /**
      * @param args the command line arguments
@@ -138,8 +229,12 @@ public class MenuBases extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BInReg;
+    private javax.swing.JButton B_Cnombre;
+    private javax.swing.JButton B_cancelar;
     private javax.swing.JButton Bcrear;
     private javax.swing.JButton Beliminar;
+    private javax.swing.JButton b_ElReg;
+    private javax.swing.JButton b_SelReg;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 Server server;

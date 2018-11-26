@@ -17,12 +17,12 @@ import javax.swing.JOptionPane;
  *
  * @author David
  */
-public class EliminarTabla extends javax.swing.JFrame {
+public class ChangeName extends javax.swing.JFrame {
 
     /**
-     * Creates new form EliminarTabla
+     * Creates new form ChangeName
      */
-    public EliminarTabla(Server s, BaseDatos baseDatos) {
+    public ChangeName(Server s, BaseDatos baseDatos) {
         server =s;
         bd = baseDatos;
         for(Table b: bd.getTables()){
@@ -42,83 +42,101 @@ public class EliminarTabla extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        b_Cancelar = new javax.swing.JButton();
-        b_eliminar = new javax.swing.JButton();
         lista_tablas1 = new javax.swing.JComboBox(tablas.toArray());
+        jLabel3 = new javax.swing.JLabel();
+        in_name = new javax.swing.JTextField();
+        b_cambiar = new javax.swing.JButton();
+        b_cancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setName(getName());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("Eliminar Tabla");
+        jLabel1.setText("Cambiar Nombre");
 
-        jLabel2.setText("Seleccione la tabla a eliminar: ");
+        jLabel2.setText("Tabla:");
 
-        b_Cancelar.setText("Cancelar");
-        b_Cancelar.addActionListener(new java.awt.event.ActionListener() {
+        jLabel3.setText("Nuevo nombre:");
+
+        b_cambiar.setText("Cambiar");
+        b_cambiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                b_CancelarActionPerformed(evt);
+                b_cambiarActionPerformed(evt);
             }
         });
 
-        b_eliminar.setText("Eliminar");
-        b_eliminar.addActionListener(new java.awt.event.ActionListener() {
+        b_cancelar.setText("Cancelar");
+        b_cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                b_eliminarActionPerformed(evt);
+                b_cancelarActionPerformed(evt);
             }
         });
-
-        lista_tablas1.setModel(lista_tablas1.getModel());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(106, 106, 106))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lista_tablas1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lista_tablas1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(30, 30, 30)
+                        .addComponent(in_name, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(21, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(56, 56, 56)
-                .addComponent(b_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
-                .addComponent(b_Cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(53, 53, 53))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(125, 125, 125)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(66, 66, 66)
+                .addComponent(b_cambiar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(b_cancelar)
+                .addGap(69, 69, 69))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(54, 54, 54)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lista_tablas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(b_Cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(b_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(47, 47, 47))
+                    .addComponent(jLabel3)
+                    .addComponent(in_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(b_cambiar)
+                    .addComponent(b_cancelar))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void b_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_eliminarActionPerformed
+    private void b_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_cancelarActionPerformed
         // TODO add your handling code here:
-        if(!bd.deleteTable((String)lista_tablas1.getSelectedItem())){
-            JOptionPane.showMessageDialog(this, "No se pudo eliminar tabla, contiene datos", "ERROR", HEIGHT);
+        new MenuBases(server, bd).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_b_cancelarActionPerformed
+
+    private void b_cambiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_cambiarActionPerformed
+        // TODO add your handling code here:
+        String newName = in_name.getText();
+        if(!bd.changeTableName((String)lista_tablas1.getSelectedItem(), newName)){
+            JOptionPane.showMessageDialog(this, "Nombre invalido!", "ERROR", HEIGHT);
         }else{
             server.updateBase(bd);
-            JOptionPane.showMessageDialog(this, "Tabla eliminada");
+            JOptionPane.showMessageDialog(this, "Nombre de tabla ha cambiado");
             Gson gson = new Gson();
-        String jsonString = gson.toJson(this.server);
+            String jsonString = gson.toJson(this.server);
         
                 try {
             FileWriter file = new FileWriter("Server.json");
@@ -130,14 +148,7 @@ public class EliminarTabla extends javax.swing.JFrame {
            new MenuBases(server, bd).setVisible(true);
            this.dispose();
         }
-    }//GEN-LAST:event_b_eliminarActionPerformed
-
-    private void b_CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_CancelarActionPerformed
-        // TODO add your handling code here:
-        new MenuBases(server, bd).setVisible(true);
-        this.dispose();
-        
-    }//GEN-LAST:event_b_CancelarActionPerformed
+    }//GEN-LAST:event_b_cambiarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -156,32 +167,33 @@ public class EliminarTabla extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EliminarTabla.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ChangeName.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EliminarTabla.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ChangeName.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EliminarTabla.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ChangeName.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EliminarTabla.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ChangeName.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-               // new EliminarTabla().setVisible(true);
+                //new ChangeName().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton b_Cancelar;
-    private javax.swing.JButton b_eliminar;
+    private javax.swing.JButton b_cambiar;
+    private javax.swing.JButton b_cancelar;
+    private javax.swing.JTextField in_name;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JComboBox lista_tablas1;
     // End of variables declaration//GEN-END:variables
-
     private BaseDatos bd;
     private Server server;
     private ArrayList<String> tablas = new ArrayList<>();

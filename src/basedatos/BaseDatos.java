@@ -128,6 +128,17 @@ public class BaseDatos {
         }
     }
     
+    public ArrayList<String> showRegistries(String tableName, String cField, String opString, String condition,String fields){
+        ArrayList<String> fList = convertToArray(fields);
+        Table table = selecTable(tableName);
+        if(table == null){
+            return null;
+        }else{
+            fList = table.showRegistries(fList, opString, cField, condition);
+        }
+        return fList;
+    }
+    
     
 
     private ArrayList<String> convertToArray(String values_string) {
