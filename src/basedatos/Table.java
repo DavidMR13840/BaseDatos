@@ -16,12 +16,14 @@ public class Table {
     private String name;
     private ArrayList<Field> fields = new ArrayList<Field>();
     public ArrayList<Registry> registries = new ArrayList<Registry>();
-    public String structure;
+    private String structure;
     private Field primField;    
     
     public Table(String pname){
         setName(pname);
     }
+    
+    public Table(){}
     
     public boolean minSize(){
         return fields.size() >= 2;
@@ -38,7 +40,9 @@ public class Table {
         return sameField;
     }
     
-    
+    public String getStructure(){
+        return this.structure;
+    }
     
     public boolean addField(String pname, boolean pKey, String type){
         if(validName(pname)){

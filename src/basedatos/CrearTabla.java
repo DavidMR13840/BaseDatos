@@ -6,6 +6,14 @@
 
 package basedatos;
 
+import com.google.gson.Gson;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author David
@@ -13,8 +21,11 @@ package basedatos;
 public class CrearTabla extends javax.swing.JFrame {
 
     /** Creates new form CrearTabla */
-    public CrearTabla() {
+    public CrearTabla(Server s, BaseDatos bd) {
         initComponents();
+        baseDatos = bd;
+        server = s;
+        tabla = new Table();
     }
 
     /** This method is called from within the constructor to
@@ -28,16 +39,16 @@ public class CrearTabla extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        B_dataTypes = new javax.swing.JComboBox<>();
+        In_Table = new javax.swing.JTextField();
+        In_Field = new javax.swing.JTextField();
+        Bt_addField = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
-        jToggleButton1 = new javax.swing.JToggleButton();
+        ListaCampos = new javax.swing.JTextArea();
+        B_PrimKey = new javax.swing.JToggleButton();
+        B_createTable = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -46,61 +57,74 @@ public class CrearTabla extends javax.swing.JFrame {
 
         jLabel2.setText("Nombre de la tabla:");
 
-        jLabel3.setText("Estructura de la tabla");
-
         jLabel4.setText("Tipo de dato:");
 
         jLabel5.setText("Nombre del campo:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        B_dataTypes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "int", "boolean", "String", "float", "double" }));
+        B_dataTypes.setSelectedItem(B_dataTypes);
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        In_Table.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                In_TableActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Agregar campo");
+        Bt_addField.setText("Agregar campo");
+        Bt_addField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Bt_addFieldActionPerformed(evt);
+            }
+        });
 
-        jTextPane1.setEditable(false);
-        jScrollPane1.setViewportView(jTextPane1);
+        ListaCampos.setColumns(20);
+        ListaCampos.setRows(5);
+        jScrollPane1.setViewportView(ListaCampos);
 
-        jToggleButton1.setText("Primary key");
+        B_PrimKey.setText("Primary key");
+
+        B_createTable.setText("Crear Tabla");
+        B_createTable.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                B_createTableActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(50, 50, 50))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
+                .addGap(202, 202, 202)
+                .addComponent(jLabel1)
+                .addContainerGap(203, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(B_createTable)
+                .addGap(43, 43, 43))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel5))
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(202, 202, 202)
-                        .addComponent(jLabel1))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(In_Table, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
+                            .addComponent(In_Field))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(B_PrimKey))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel5))
-                                .addGap(30, 30, 30)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
-                                    .addComponent(jTextField2))
-                                .addGap(70, 70, 70)
-                                .addComponent(jToggleButton1)))))
-                .addContainerGap(45, Short.MAX_VALUE))
+                        .addComponent(B_dataTypes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Bt_addField)))
+                .addGap(50, 50, 50))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -110,32 +134,67 @@ public class CrearTabla extends javax.swing.JFrame {
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37)
-                .addComponent(jLabel3)
-                .addGap(35, 35, 35)
+                    .addComponent(In_Table, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jToggleButton1))
-                    .addComponent(jLabel5))
-                .addGap(18, 18, 18)
+                        .addComponent(In_Field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(B_PrimKey)))
+                .addGap(47, 47, 47)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                    .addComponent(Bt_addField)
+                    .addComponent(B_dataTypes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(37, 37, 37)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addComponent(B_createTable)
+                .addGap(31, 31, 31))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void In_TableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_In_TableActionPerformed
+        
+    }//GEN-LAST:event_In_TableActionPerformed
+
+    private void Bt_addFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Bt_addFieldActionPerformed
+        String name = In_Field.getText();
+        boolean pKey = B_PrimKey.isSelected();
+        String type = B_dataTypes.getSelectedItem().toString();
+        Field f = new Field(name, type, pKey);
+        if(tabla.addField(name, pKey, type)){
+        ListaCampos.append(f.toString()+ "\n");}
+    }//GEN-LAST:event_Bt_addFieldActionPerformed
+
+    private void B_createTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_createTableActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+        if(!tabla.changeName(In_Table.getText())){
+            JOptionPane.showMessageDialog(this, "Nombre Invalido", "Error", HEIGHT);
+        }
+        if(!baseDatos.addTable(tabla)){
+        JOptionPane.showMessageDialog(this, "No se pudo agregar tabla", "Error", HEIGHT);
+        }else{
+            server.updateBase(baseDatos);
+            JOptionPane.showMessageDialog(this, "Tabla agregada");
+            Gson gson = new Gson();
+        String jsonString = gson.toJson(this.server);
+        
+                try {
+            FileWriter file = new FileWriter("Server.json");
+                file.write(jsonString);
+                file.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(control.class.getName()).log(Level.SEVERE, null, ex);
+        }
+           new CrearTabla(server, baseDatos).setVisible(true);
+           this.dispose();
+        }
+        
+        
+    }//GEN-LAST:event_B_createTableActionPerformed
 
     /**
      * @param args the command line arguments
@@ -167,24 +226,28 @@ public class CrearTabla extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CrearTabla().setVisible(true);
+                //new CrearTabla().setVisible(true);
             }
         });
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JToggleButton B_PrimKey;
+    private javax.swing.JButton B_createTable;
+    private javax.swing.JComboBox<String> B_dataTypes;
+    private javax.swing.JButton Bt_addField;
+    private javax.swing.JTextField In_Field;
+    private javax.swing.JTextField In_Table;
+    private javax.swing.JTextArea ListaCampos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextPane jTextPane1;
-    private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
-
+    private BaseDatos baseDatos;
+    //ArrayList<Field> campos = new ArrayList<>();
+    private Table tabla;
+    private Server server;
 }

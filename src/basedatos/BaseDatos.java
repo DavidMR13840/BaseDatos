@@ -19,7 +19,13 @@ public class BaseDatos {
         this.name = nameString;
     }
     
+    public String getName(){
+        return this.name;
+    }
     
+    public ArrayList<Table> getTables(){
+        return  tables;
+    }
     private boolean validName(String pname){
         boolean valid = true;
         if(7 > pname.length() || pname.length() > 16){
@@ -82,7 +88,7 @@ public class BaseDatos {
         return deleted;
     }
     
-    private Table selecTable(String pname){
+    public Table selecTable(String pname){
         Table table;
         table = null;
         
