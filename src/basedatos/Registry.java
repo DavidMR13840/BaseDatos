@@ -42,7 +42,7 @@ class Registry {
         values.add(v);
     }
     
-        private Value getValue(Field f){
+        public Value getValue(Field f){
         Value res = null;
         for(Value v: values){
             if(v.getField().equals(f)){

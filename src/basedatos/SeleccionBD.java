@@ -39,6 +39,7 @@ public class SeleccionBD extends javax.swing.JFrame {
         }
         server = basesDatos;
         
+        
         for(BaseDatos bd : server.bases){
             nombresBases.add(bd.getName());
         }
@@ -160,7 +161,7 @@ public class SeleccionBD extends javax.swing.JFrame {
         MenuBases menuBases = new MenuBases(server, base);
         menuBases.setVisible(true);
         this.dispose();
-        
+           
     }//GEN-LAST:event_BSelectActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

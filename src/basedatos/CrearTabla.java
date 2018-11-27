@@ -49,6 +49,7 @@ public class CrearTabla extends javax.swing.JFrame {
         ListaCampos = new javax.swing.JTextArea();
         B_PrimKey = new javax.swing.JToggleButton();
         B_createTable = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -90,6 +91,8 @@ public class CrearTabla extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setText("Tabla de de tener al menos 2 campos");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -102,10 +105,6 @@ public class CrearTabla extends javax.swing.JFrame {
                 .addGap(202, 202, 202)
                 .addComponent(jLabel1)
                 .addContainerGap(203, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(B_createTable)
-                .addGap(43, 43, 43))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,6 +124,12 @@ public class CrearTabla extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(Bt_addField)))
                 .addGap(50, 50, 50))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(B_createTable)
+                .addGap(38, 38, 38))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,9 +153,11 @@ public class CrearTabla extends javax.swing.JFrame {
                     .addComponent(jLabel4))
                 .addGap(37, 37, 37)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                .addComponent(B_createTable)
-                .addGap(31, 31, 31))
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(B_createTable)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         pack();
@@ -166,7 +173,9 @@ public class CrearTabla extends javax.swing.JFrame {
         String type = B_dataTypes.getSelectedItem().toString();
         Field f = new Field(name, type, pKey);
         if(tabla.addField(name, pKey, type)){
-        ListaCampos.append(f.toString()+ "\n");}
+        ListaCampos.append(f.toString()+ "\n");}else{
+            JOptionPane.showMessageDialog(this, "Campo invalido(Nombre invalido o campo ya existe)");
+        }
     }//GEN-LAST:event_Bt_addFieldActionPerformed
 
     private void B_createTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_createTableActionPerformed
@@ -242,6 +251,7 @@ public class CrearTabla extends javax.swing.JFrame {
     private javax.swing.JTextArea ListaCampos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;

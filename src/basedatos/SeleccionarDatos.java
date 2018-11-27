@@ -234,7 +234,7 @@ public class SeleccionarDatos extends javax.swing.JFrame {
             found_op.append(s + "\n");
         }
         if(!"".equals(found.get(0))){
-        found_op.append("Cantidad de registros encontrados " + Integer.toString(found.size()));
+        found_op.append("\nCantidad de registros encontrados " + Integer.toString(found.size()));
         }else{
             JOptionPane.showMessageDialog(this, "No se encontro ningun registro");
         }

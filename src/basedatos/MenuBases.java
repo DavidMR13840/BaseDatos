@@ -37,6 +37,7 @@ public class MenuBases extends javax.swing.JFrame {
         B_Cnombre = new javax.swing.JButton();
         b_ElReg = new javax.swing.JButton();
         b_SelReg = new javax.swing.JButton();
+        b_regArch = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -92,6 +93,13 @@ public class MenuBases extends javax.swing.JFrame {
             }
         });
 
+        b_regArch.setText("Insertar Registros por archivo");
+        b_regArch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_regArchActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -103,24 +111,26 @@ public class MenuBases extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(B_cancelar))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(29, 29, 29)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(BInReg)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                                 .addComponent(b_SelReg))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(Beliminar)
-                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(Bcrear)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(B_Cnombre)
-                                    .addComponent(b_ElReg)))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(B_cancelar)))
+                                    .addComponent(b_ElReg)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(b_regArch)
+                                    .addComponent(Beliminar))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addGap(37, 37, 37))
         );
         layout.setVerticalGroup(
@@ -140,7 +150,9 @@ public class MenuBases extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(b_SelReg)
                     .addComponent(BInReg))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(b_regArch)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addComponent(B_cancelar)
                 .addGap(28, 28, 28))
         );
@@ -192,6 +204,12 @@ public class MenuBases extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_b_SelRegActionPerformed
 
+    private void b_regArchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_regArchActionPerformed
+        // TODO add your handling code here:
+        new InsertarRegistros(server, baseDatos).setVisible(rootPaneCheckingEnabled);
+        this.dispose();
+    }//GEN-LAST:event_b_regArchActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -235,6 +253,7 @@ public class MenuBases extends javax.swing.JFrame {
     private javax.swing.JButton Beliminar;
     private javax.swing.JButton b_ElReg;
     private javax.swing.JButton b_SelReg;
+    private javax.swing.JButton b_regArch;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 Server server;

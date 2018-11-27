@@ -6,29 +6,36 @@
 package basedatos;
 
 import com.google.gson.Gson;
+import static java.awt.image.ImageObserver.HEIGHT;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
  * @author David
  */
-public class InsertarRegistro extends javax.swing.JFrame {
+public class InsertarRegistros extends javax.swing.JFrame {
 
     /**
-     * Creates new form InsertarRegistro
+     * Creates new form InsertarRegistros
      */
-    public InsertarRegistro(Server s, BaseDatos baseDatos) {
-        bd = baseDatos;
+    public InsertarRegistros(Server s, BaseDatos baseDatos) {
         server = s;
+        bd = baseDatos;
         for(Table b: bd.getTables()){
             tablas.add(b.getName());
         }
         initComponents();
+        
     }
 
     /**
@@ -42,35 +49,29 @@ public class InsertarRegistro extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         Structure_in = new javax.swing.JLabel();
-        Reg_input = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        b_Sarchivo = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         lista_tablas = new javax.swing.JComboBox(tablas.toArray());
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("Insertar Registro");
+        jLabel1.setText("Insertar Registros desde archivo");
 
         jLabel2.setText("Tabla: ");
 
-        jLabel3.setText("Datos a ingresar:");
-
         jLabel4.setText("Estructura de la tabla:");
 
-        Reg_input.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Reg_inputActionPerformed(evt);
-            }
-        });
+        jLabel3.setText("Archivo: ");
 
-        jButton1.setText("Insertar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        b_Sarchivo.setText("Seleccionar Archivo");
+        b_Sarchivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                b_SarchivoActionPerformed(evt);
             }
         });
 
@@ -81,8 +82,14 @@ public class InsertarRegistro extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Insertar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         lista_tablas.setModel(lista_tablas.getModel());
-        lista_tablas.setSelectedItem(lista_tablas);
         lista_tablas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 lista_tablasActionPerformed(evt);
@@ -96,35 +103,37 @@ public class InsertarRegistro extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(113, 113, 113)
-                                .addComponent(jLabel1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(23, 23, 23)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(lista_tablas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel4)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jButton1)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jButton2))
-                                        .addComponent(Reg_input, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(0, 17, Short.MAX_VALUE))
+                        .addGap(62, 62, 62)
+                        .addComponent(jLabel1)
+                        .addGap(0, 40, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(23, 23, 23)
-                        .addComponent(Structure_in, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Structure_in, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addGap(58, 58, 58)
+                                        .addComponent(b_Sarchivo))
+                                    .addComponent(jLabel4)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addGap(26, 26, 26)
+                                        .addComponent(lista_tablas, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(28, 28, 28)
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton2)
+                                .addGap(49, 49, 49)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+                .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -135,40 +144,67 @@ public class InsertarRegistro extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Structure_in, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
-                .addGap(18, 18, 18)
-                .addComponent(Reg_input, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(b_Sarchivo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap(28, Short.MAX_VALUE))
+                    .addComponent(jButton2)
+                    .addComponent(jButton1))
+                .addGap(30, 30, 30))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void Reg_inputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Reg_inputActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_Reg_inputActionPerformed
+        new MenuBases(server, bd).setVisible(true);
+
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void b_SarchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_SarchivoActionPerformed
+        // TODO add your handling code here:
+        filename = fileChooser();
+    }//GEN-LAST:event_b_SarchivoActionPerformed
 
     private void lista_tablasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lista_tablasActionPerformed
         // TODO add your handling code here:
         String tableName = (String)lista_tablas.getSelectedItem();
         Structure_in.setText(bd.selecTable(tableName).getStructure());
-        
-        
+
     }//GEN-LAST:event_lista_tablasActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String in_reg = Reg_input.getText();
-        String tableName = (String)lista_tablas.getSelectedItem();
-        if(!bd.addRegistry(tableName, in_reg)){
-            JOptionPane.showMessageDialog(this, "No se pudo agregar el registro", "ERROR", HEIGHT);
-        }else{
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(filename));
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(InsertarRegistros.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        ArrayList<String> lines = new ArrayList<>();
+        String line = null;
+        if(reader != null){
+            try {
+                while ((line = reader.readLine()) != null) {
+                    lines.add(line);
+                }   } catch (IOException ex) {
+                Logger.getLogger(InsertarRegistros.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        boolean added = true;
+        for(String l: lines){
+            if(!bd.addRegistry((String)lista_tablas.getSelectedItem(), l)){
+                JOptionPane.showMessageDialog(this, "No se pudo agregar el archivo", "ERROR", HEIGHT);
+                added = false;
+                break;
+            }
+        }
+        if(added){
             server.updateBase(bd);
-            JOptionPane.showMessageDialog(this, "Registro agregado");
+            JOptionPane.showMessageDialog(this, "Archivo agregado");
             Gson gson = new Gson();
         String jsonString = gson.toJson(this.server);
         
@@ -179,18 +215,10 @@ public class InsertarRegistro extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(control.class.getName()).log(Level.SEVERE, null, ex);
         }
-            InsertarRegistro ir = new InsertarRegistro(server, bd);
-            ir.setVisible(true);
-            this.dispose();
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        new MenuBases(server, bd).setVisible(true);
-        
+        new InsertarRegistros(server, bd).setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -209,31 +237,47 @@ public class InsertarRegistro extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(InsertarRegistro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InsertarRegistros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(InsertarRegistro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InsertarRegistros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(InsertarRegistro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InsertarRegistros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(InsertarRegistro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InsertarRegistros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                //new InsertarRegistro().setVisible(true);
+                //new InsertarRegistros().setVisible(true);
             }
         });
     }
 
+     private String fileChooser() {
+        // FileChooser
+
+        JFileChooser chooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+            "CSV Files", "csv");
+        chooser.setFileFilter(filter);
+        
+        int returnVal = chooser.showOpenDialog(chooser);
+        if(returnVal == JFileChooser.APPROVE_OPTION) { 
+            return chooser.getSelectedFile().getName();
+        }else{
+            return null;
+        }
+     
+     }
     private BaseDatos bd;
     private Server server;
     private ArrayList<String> tablas = new ArrayList<>();
-    
+    private String filename;
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField Reg_input;
     private javax.swing.JLabel Structure_in;
+    private javax.swing.JButton b_Sarchivo;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;

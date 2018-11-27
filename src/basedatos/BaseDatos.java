@@ -134,9 +134,18 @@ public class BaseDatos {
         if(table == null){
             return null;
         }else{
-            fList = table.showRegistries(fList, opString, cField, condition);
+            return table.showRegistries(fList, opString, cField, condition);
         }
-        return fList;
+        
+    }
+    
+    public int deleteRegistries(String tableName, String cField, String opString, String condition){
+        Table table = selecTable(tableName);
+        if(table == null){
+            return -2;
+        }else{
+            return table.deleteRegistries( cField,  opString,  condition);
+        }
     }
     
     
